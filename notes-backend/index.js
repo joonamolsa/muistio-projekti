@@ -10,6 +10,30 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+// 📚 Muistiinpanojen tallennus & haku (turvallisempi versio)
+let cosmosClient;
+let notesContainer;
+
+try {
+  cosmosClient = new CosmosClient({
+    endpoint: process.env.COSMOS_ENDPOINT,
+    key: process.env.COSMOS_KEY,
+  });
+
+  notesContainer = cosmosClient
+    .database(process.env.COSMOS_DB)
+    .container("notes");
+
+  console.log("✅ CosmosClient yhdistetty");
+} catch (err) {
+  console.error("❌ Virhe CosmosClient-yhteydessä:", err);
+}
+
+// ✅ Tarkistusreitti Azurelle
+app.get("/", (req, res) => {
+  res.send("Muistion backend toimii!");
+});
+
 // 🔐 Kirjautuminen
 app.post("/login", async (req, res) => {
   const { username, password } = req.body;
@@ -40,16 +64,6 @@ app.post("/login", async (req, res) => {
     res.status(500).json({ success: false, message: "Palvelinvirhe" });
   }
 });
-
-// 📚 Muistiinpanojen tallennus & haku
-const cosmosClient = new CosmosClient({
-  endpoint: process.env.COSMOS_ENDPOINT,
-  key: process.env.COSMOS_KEY,
-});
-
-const notesContainer = cosmosClient
-  .database(process.env.COSMOS_DB)
-  .container("notes");
 
 // POST /notes — lisää muistiinpano
 app.post("/notes", async (req, res) => {
@@ -157,7 +171,7 @@ app.delete("/notes/:id", async (req, res) => {
   }
 });
 
-const PORT = 5000;
+const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`✅ Backend käynnissä portissa ${PORT}`);
 });

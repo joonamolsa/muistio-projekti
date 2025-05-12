@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import NotesPage from "./NotesPage";
 import "./App.css";
 
+const BASE_URL = process.env.REACT_APP_API_URL;
+
 function App() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -12,7 +14,7 @@ function App() {
     e.preventDefault();
 
     try {
-      const res = await fetch("http://localhost:5000/login", {
+      const res = await fetch(`${BASE_URL}/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username, password }),

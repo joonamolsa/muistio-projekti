@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import "./NotesPage.css";
 
+const BASE_URL = process.env.REACT_APP_API_URL;
+
 function NotesPage({ username, onLogout }) {
   const [notes, setNotes] = useState([]);
   const [title, setTitle] = useState("");
@@ -9,7 +11,7 @@ function NotesPage({ username, onLogout }) {
   const [editingNoteId, setEditingNoteId] = useState(null);
 
   useEffect(() => {
-    fetch(`http://localhost:5000/notes?username=${username}`)
+    fetch(`${BASE_URL}/notes?username=${username}`)
       .then((res) => res.json())
       .then((data) => {
         if (data.success) {
@@ -33,7 +35,7 @@ function NotesPage({ username, onLogout }) {
     }
 
     try {
-      const res = await fetch("http://localhost:5000/notes", {
+      const res = await fetch(`${BASE_URL}/notes`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username, title, content }),
@@ -56,12 +58,9 @@ function NotesPage({ username, onLogout }) {
 
   const handleDelete = async (id) => {
     try {
-      const res = await fetch(
-        `http://localhost:5000/notes/${id}?username=${username}`,
-        {
-          method: "DELETE",
-        }
-      );
+      const res = await fetch(`${BASE_URL}/notes/${id}?username=${username}`, {
+        method: "DELETE",
+      });
 
       const data = await res.json();
       if (data.success) {
@@ -91,7 +90,7 @@ function NotesPage({ username, onLogout }) {
     }
 
     try {
-      const res = await fetch(`http://localhost:5000/notes/${editingNoteId}`, {
+      const res = await fetch(`${BASE_URL}/notes/${editingNoteId}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username, title, content }),
@@ -116,7 +115,7 @@ function NotesPage({ username, onLogout }) {
   };
 
   const handleLogout = () => {
-    onLogout(); // Ilmoita App.js:lle että kirjautuminen on päättynyt
+    onLogout();
   };
 
   return (
