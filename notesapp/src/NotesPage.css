@@ -1,0 +1,121 @@
+/* Yleisrungon tausta ja fontti */
+body {
+  background-color: #1e1e1e;
+  color: #f0f0f0;
+  font-family: "Inter", sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+.logout-button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+/* Sivun varsinainen sisältölaatikko */
+.notes-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem;
+  background-color: #2a2a2a;
+  border-radius: 8px;
+}
+
+/* Yläosan otsikko ja uloskirjautumisnappi riville */
+.notes-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+/* Lomake muistiinpanojen lisäämiseen tai muokkaamiseen */
+.notes-form {
+  border: 1px solid #444;
+  padding: 1rem;
+  border-radius: 6px;
+  background-color: #333;
+  margin-bottom: 2rem;
+}
+
+.notes-form input {
+  width: 97%;
+  height: 20px;
+  margin-bottom: 1rem;
+  padding: 0.5rem;
+  font-size: 1rem;
+  border: 1px solid #555;
+  border-radius: 4px;
+  background-color: #222;
+  color: #f0f0f0;
+}
+
+.notes-form textarea {
+  width: 97%;
+  height: 80px;
+  margin-bottom: 1rem;
+  padding: 0.5rem;
+  font-size: 1rem;
+  border: 1px solid #555;
+  border-radius: 4px;
+  background-color: #222;
+  color: #f0f0f0;
+}
+
+.notes-form button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+/* Korttien gridasettelu */
+.notes-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 1rem;
+}
+
+/* Yksittäinen kortti (muistiinpano) */
+.note-card {
+  border: 1px solid #444;
+  border-radius: 8px;
+  padding: 1rem;
+  background-color: #333;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+  transition: transform 0.1s ease-in-out;
+}
+
+.note-card:hover {
+  transform: scale(1.02);
+}
+
+.note-card h4 {
+  margin: 0 0 0.5rem 0;
+}
+
+/* Muokkaa ja poista -napit */
+.note-card button {
+  margin-right: 0.5rem;
+  padding: 0.4rem 0.8rem;
+  font-size: 0.9rem;
+  border-radius: 4px;
+  border: none;
+  cursor: pointer;
+}
+
+.note-card button:first-of-type {
+  background-color: #007bff;
+  color: white;
+}
+
+.note-card button:last-of-type {
+  background-color: #dc3545;
+  color: white;
+}
