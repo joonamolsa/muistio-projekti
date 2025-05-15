@@ -7,7 +7,9 @@ const BASE_URL = process.env.REACT_APP_API_URL;
 function App() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [loggedInUser, setLoggedInUser] = useState(null);
+  const [loggedInUser, setLoggedInUser] = useState(() => {
+    return localStorage.getItem("loggedInUser");
+  });
   const [message, setMessage] = useState("");
 
   const handleLogin = async (e) => {
@@ -23,6 +25,7 @@ function App() {
       const data = await res.json();
       if (res.ok && data.success) {
         setLoggedInUser(data.user);
+        localStorage.setItem("loggedInUser", data.user);
         setMessage("");
       } else {
         setMessage("Väärä käyttäjätunnus tai salasana.");
@@ -33,13 +36,13 @@ function App() {
     }
   };
 
+  const handleLogout = () => {
+    setLoggedInUser(null);
+    localStorage.removeItem("loggedInUser");
+  };
+
   if (loggedInUser) {
-    return (
-      <NotesPage
-        username={loggedInUser}
-        onLogout={() => setLoggedInUser(null)}
-      />
-    );
+    return <NotesPage username={loggedInUser} onLogout={handleLogout} />;
   }
 
   return (
