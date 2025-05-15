@@ -17,6 +17,9 @@ jobs:
     permissions:
        id-token: write
        contents: read
+    env:
+      REACT_APP_API_URL: ${{ secrets.REACT_APP_API_URL }}
+      
     steps:
       - uses: actions/checkout@v3
         with:
